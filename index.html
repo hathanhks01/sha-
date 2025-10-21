@@ -189,7 +189,7 @@
       position: fixed;
       inset: 0;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       z-index: 11;
       pointer-events: none;
@@ -198,6 +198,7 @@
       transition: opacity 480ms ease, visibility 480ms;
       padding: 24px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .profile.show {
@@ -220,7 +221,11 @@
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 60px rgba(255, 182, 193, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.1);
       animation: slideIn 0.6s ease-out;
-      margin: auto;
+      margin: 12px auto;
+      /* Tối ưu cho mobile - giới hạn chiều cao và cho phép scroll */
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     @keyframes slideIn {
@@ -612,6 +617,56 @@
    RESPONSIVE MEDIA QUERIES
    ============================================ */
 
+    /* Mobile touch optimization */
+    @media (max-width: 768px) {
+      body {
+        /* Ngăn scroll background trên mobile */
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .profile {
+        /* Đảm bảo profile container có thể scroll đúng cách */
+        align-items: flex-start;
+        padding: 12px;
+        /* Ngăn scroll background */
+        overscroll-behavior: contain;
+      }
+
+      .profile-card {
+        /* Tối ưu cho mobile - giảm padding và margin */
+        margin: 0 auto;
+        max-height: calc(100vh - 24px);
+        /* Đảm bảo scroll mượt mà */
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        /* Ngăn zoom khi double tap */
+        touch-action: pan-y;
+      }
+
+      /* Tối ưu cho các element bên trong profile card */
+      .profile-body {
+        /* Đảm bảo nội dung có thể scroll */
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Tối ưu cho questions page */
+      .questions-page {
+        align-items: flex-start;
+        padding: 12px;
+        overscroll-behavior: contain;
+      }
+
+      .questions-container {
+        margin: 0 auto;
+        max-height: calc(100vh - 24px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+      }
+    }
+
     /* Mobile Extra Small (<= 350px) */
     @media (max-width: 350px) {
       body {
@@ -648,13 +703,20 @@
       }
 
       .profile {
-        padding: 16px;
+        padding: 8px;
+        align-items: flex-start;
       }
 
       .profile-card {
-        padding: 20px 16px;
-        gap: 12px;
-        border-radius: 14px;
+        padding: 16px 12px;
+        gap: 10px;
+        border-radius: 12px;
+        margin: 0 auto;
+        max-height: calc(100vh - 16px);
+        /* Tối ưu scroll cho màn hình rất nhỏ */
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .name {
@@ -696,12 +758,18 @@
       }
 
       .questions-page {
-        padding: 16px;
+        padding: 8px;
+        align-items: flex-start;
       }
 
       .questions-container {
-        padding: 20px 16px;
-        border-radius: 14px;
+        padding: 16px 12px;
+        border-radius: 12px;
+        margin: 0 auto;
+        max-height: calc(100vh - 16px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -798,7 +866,12 @@
       }
 
       .profile-card {
-        padding: 22px 18px;
+        padding: 20px 16px;
+        margin: 0 auto;
+        max-height: calc(100vh - 20px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .name {
@@ -833,7 +906,12 @@
       }
 
       .questions-container {
-        padding: 22px 18px;
+        padding: 20px 16px;
+        margin: 0 auto;
+        max-height: calc(100vh - 20px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -907,7 +985,12 @@
       }
 
       .profile-card {
-        padding: 24px 20px;
+        padding: 22px 18px;
+        margin: 0 auto;
+        max-height: calc(100vh - 24px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .name {
@@ -933,7 +1016,12 @@
       }
 
       .questions-container {
-        padding: 24px 20px;
+        padding: 22px 18px;
+        margin: 0 auto;
+        max-height: calc(100vh - 24px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -995,7 +1083,12 @@
       }
 
       .profile-card {
-        padding: 28px 24px;
+        padding: 26px 22px;
+        margin: 0 auto;
+        max-height: calc(100vh - 28px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .name {
@@ -1011,7 +1104,12 @@
       }
 
       .questions-container {
-        padding: 28px 24px;
+        padding: 26px 22px;
+        margin: 0 auto;
+        max-height: calc(100vh - 28px);
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -1107,6 +1205,55 @@
 
       .button-container {
         gap: 16px;
+      }
+    }
+
+    /* Additional mobile optimizations */
+    @media (max-width: 768px) {
+      /* Ngăn zoom khi double tap trên mobile */
+      * {
+        touch-action: manipulation;
+      }
+
+      /* Tối ưu cho profile card trên mobile */
+      .profile-card {
+        /* Đảm bảo scroll mượt mà */
+        scroll-behavior: smooth;
+        /* Ngăn bounce effect trên iOS */
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+
+      /* Tối ưu cho questions container */
+      .questions-container {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+
+      /* Tối ưu cho các input trên mobile */
+      .question-input,
+      .question-textarea {
+        /* Ngăn zoom khi focus trên iOS */
+        font-size: 16px;
+        /* Đảm bảo input không bị che bởi keyboard */
+        transform: translateZ(0);
+      }
+
+      /* Tối ưu cho button trên mobile */
+      .cta-button,
+      .submit-button,
+      .continue-button,
+      .accept-button,
+      .reject-button {
+        /* Tăng kích thước touch target */
+        min-height: 44px;
+        min-width: 44px;
+        /* Ngăn highlight khi touch */
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
       }
     }
 
@@ -1463,9 +1610,20 @@
         setTimeout(() => {
           questionsPage.classList.add('show');
           questionsPage.setAttribute('aria-hidden', 'false');
-          // Focus vào input đầu tiên
+          // Focus vào input đầu tiên với delay để tránh lỗi trên mobile
           const firstInput = document.getElementById('q1');
-          if (firstInput) firstInput.focus();
+          if (firstInput) {
+            // Delay focus để tránh lỗi trên mobile
+            setTimeout(() => {
+              try {
+                firstInput.focus();
+                // Scroll input vào view trên mobile
+                firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              } catch (e) {
+                console.log('Focus failed on mobile');
+              }
+            }, 100);
+          }
         }, 500);
       }
     }
@@ -1645,6 +1803,45 @@
       setTimeout(() => createHeartBurst(), 600);
       setTimeout(() => createHeartBurst(), 900);
     }
+    // Mobile touch optimization
+    function optimizeMobileTouch() {
+      // Ngăn scroll background khi touch trên profile card
+      const profileCard = document.querySelector('.profile-card');
+      const questionsContainer = document.querySelector('.questions-container');
+      
+      if (profileCard) {
+        profileCard.addEventListener('touchstart', function(e) {
+          // Ngăn scroll background
+          e.stopPropagation();
+        }, { passive: false });
+        
+        profileCard.addEventListener('touchmove', function(e) {
+          // Chỉ cho phép scroll trong container
+          if (this.scrollTop === 0 && e.touches[0].clientY > e.touches[0].pageY) {
+            e.preventDefault();
+          }
+          if (this.scrollTop + this.offsetHeight >= this.scrollHeight && e.touches[0].clientY < e.touches[0].pageY) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+      }
+      
+      if (questionsContainer) {
+        questionsContainer.addEventListener('touchstart', function(e) {
+          e.stopPropagation();
+        }, { passive: false });
+        
+        questionsContainer.addEventListener('touchmove', function(e) {
+          if (this.scrollTop === 0 && e.touches[0].clientY > e.touches[0].pageY) {
+            e.preventDefault();
+          }
+          if (this.scrollTop + this.offsetHeight >= this.scrollHeight && e.touches[0].clientY < e.touches[0].pageY) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       const audio = document.getElementById("bgMusic");
       const btn = document.getElementById("toggleSound");
@@ -1668,6 +1865,9 @@
           btn.textContent = "🔊";
         }
       });
+
+      // Tối ưu mobile touch
+      optimizeMobileTouch();
     });
   </script>
 </body>
