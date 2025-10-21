@@ -189,8 +189,8 @@
       position: fixed;
       inset: 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
       z-index: 11;
       pointer-events: none;
       opacity: 0;
@@ -198,6 +198,7 @@
       transition: opacity 480ms ease, visibility 480ms;
       padding: 24px;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .profile.show {
