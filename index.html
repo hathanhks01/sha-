@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tình yêu - Pink Stars ✨</title>
+    <style>
+/* Pink "love" background */
+:root{
+  --pink1: #ffafbd;
+  --pink2: #ffc3a0;
+  --accent: #ff6b9a;
+  --bg-dark: #ff7eb3;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html,body{
+  height:100%;
+}
+
+body{
+  min-height:100vh;
+  background: radial-gradient(1200px 600px at 10% 20%, rgba(255,255,255,0.12), transparent 10%),
+              linear-gradient(135deg, var(--pink1) 0%, var(--pink2) 50%, var(--bg-dark) 100%);
+  overflow-x:hidden;
+  overflow-y: auto;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  position:relative;
+}
+
+/* star style */
+.star{
+  position:fixed;
+  border-radius:50%;
+  pointer-events:none;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 20%, rgba(255,255,255,0.2) 40%, transparent 60%);
+  box-shadow: 0 0 6px rgba(255,255,255,0.9), 0 0 12px rgba(255,183,197,0.35);
+  transform-origin:center center;
+  will-change:opacity, transform, filter;
+  mix-blend-mode: screen;
+  animation-name: twinkle, floatTiny;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  z-index: 1;
+}
+
+/* Floating hearts */
+.heart{
+  position:fixed;
+  font-size: 20px;
+  opacity: 0;
+  pointer-events:none;
+  z-index: 2;
+  animation: floatHeart 6s ease-in forwards;
+}
+
+@keyframes floatHeart{
+  0% {
+    opacity: 0;
+    transform: translateY(0) rotate(0deg) scale(0);
+  }
+  10% {
+    opacity: 0.8;
+    transform: translateY(-20px) rotate(15deg) scale(1);
+  }
+  90% {
+    opacity: 0.6;
+    transform: translateY(-80vh) rotate(-25deg) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-90vh) rotate(-30deg) scale(0.8);
+  }
+}
+
+@keyframes twinkle{
+  0%   {opacity:0.15; transform: scale(0.9);}
+  40%  {opacity:1;    transform: scale(1.15);}
+  70%  {opacity:0.6;  transform: scale(1.0);}
+  100% {opacity:0.18; transform: scale(0.95);}
+}
+
+@keyframes floatTiny {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-6px) translateX(3px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* Centered typewriter intro */
+.intro{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:12;
+  pointer-events:none;
+  padding:24px;
+  transition: opacity 420ms ease, transform 420ms ease;
+}
+
+.intro.done{
+  opacity:0;
+  transform: translateY(-12px) scale(0.995);
+  pointer-events:none;
+}
+
+.intro-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:14px;
+  pointer-events:auto;
+  max-width: min(90ch, 92%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+  border-radius:16px;
+  padding:28px 32px;
+  text-align:center;
+  backdrop-filter: blur(8px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25), 0 0 60px rgba(255,182,193,0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.intro-box:hover{
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 80px rgba(255,182,193,0.3);
+}
+
+.intro-art{
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  object-fit:cover;
+  flex: 0 0 auto;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.32), 0 0 18px rgba(255,182,193,0.12);
+  border: 2px solid rgba(255,255,255,0.12);
+  transition: transform 320ms ease, box-shadow 320ms ease, opacity 320ms ease;
+  opacity: 0.98;
+}
+
+.skip-hint{
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-top: 8px;
+}
+
+.intro-box:hover .intro-art{ 
+  transform: translateY(-4px) scale(1.02); 
+}
+
+/* Profile card */
+.profile{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:11;
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  transition: opacity 480ms ease, visibility 480ms;
+  padding:24px;
+  overflow-y: auto;
+}
+
+.profile.show{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.profile-card{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  align-items:flex-start;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border-radius:18px;
+  padding:32px 28px;
+  max-width: min(65ch, 760px);
+  width:100%;
+  color:#fff;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 60px rgba(255,182,193,0.15);
+  border:1px solid rgba(255,255,255,0.1);
+  animation: slideIn 0.6s ease-out;
+  margin: auto;
+}
+
+@keyframes slideIn{
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.profile-body{ 
+  width:100%; 
+  min-width:0;
+}
+
+.profile-card img{
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.name{ 
+  margin:0 0 8px 0; 
+  font-size:2rem; 
+  color:#fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name::before{
+  content: "💫";
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin{
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.info-item{
+  margin: 12px 0;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+  transition: all 0.3s ease;
+}
+
+.info-item:hover{
+  background: rgba(255,255,255,0.08);
+  transform: translateX(5px);
+  border-left-width: 5px;
+}
+
+.info-item h3{
+  color: rgba(255,255,255,0.95);
+  font-size: 1rem;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-item p, .info-item span{
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+.section-title{
+  font-size: 1.3rem;
+  color: #fff;
+  margin: 20px 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.bio{ 
+  margin:12px 0; 
+  color: rgba(255,255,255,0.92); 
+  line-height:1.7;
+  background: rgba(255,255,255,0.04);
+  padding: 16px;
+  border-radius: 10px;
+}
+
+/* blinking cursor */
+.cursor{
+  color: var(--accent);
+  display:inline-block;
+  margin-left:6px;
+  font-weight:700;
+  animation: blink 1s steps(2,start) infinite;
+  font-size: 1.2rem;
+}
+
+@keyframes blink {
+  0% { opacity:1 }
+  50% { opacity:0 }
+  100% { opacity:1 }
+}
+
+/* Interactive button */
+.cta-button{
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--accent), #ff8fb5);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255,107,154,0.4);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.cta-button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,107,154,0.6);
+}
+
+/* Questions page styles */
+.questions-page{
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 13;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 480ms ease, visibility 480ms;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.questions-page.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.questions-container{
+  max-width: min(70ch, 90%);
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border-radius: 18px;
+  padding: 32px 28px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 60px rgba(255,182,193,0.15);
+  border: 1px solid rgba(255,255,255,0.1);
+  animation: slideIn 0.6s ease-out;
+  margin: auto;
+}
+
+.questions-header{
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.questions-header h2{
+  color: #fff;
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.questions-header p{
+  color: rgba(255,255,255,0.85);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.question-item{
+  margin-bottom: 24px;
+}
+
+.question-label{
+  display: block;
+  color: rgba(255,255,255,0.95);
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.question-input,
+.question-textarea{
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.question-input::placeholder,
+.question-textarea::placeholder{
+  color: rgba(255,255,255,0.5);
+}
+
+.question-input:focus,
+.question-textarea:focus{
+  background: rgba(255,255,255,0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255,107,154,0.2);
+}
+
+.question-textarea{
+  min-height: 100px;
+  resize: vertical;
+}
+
+.submit-button{
+  width: 100%;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--accent), #ff8fb5);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255,107,154,0.4);
+  transition: all 0.3s ease;
+  margin-top: 12px;
+}
+
+.submit-button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,107,154,0.6);
+}
+
+.submit-button:active{
+  transform: translateY(0);
+}
+
+.thank-you{
+  text-align: center;
+  color: #fff;
+  animation: slideIn 0.6s ease-out;
+}
+
+.thank-you h2{
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.thank-you p{
+  color: rgba(255,255,255,0.9);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.continue-button{
+  margin-top: 24px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--accent), #ff8fb5);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255,107,154,0.4);
+  transition: all 0.3s ease;
+}
+
+.continue-button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,107,154,0.6);
+}
+
+.drink-offer{
+  text-align: center;
+  color: #fff;
+  animation: slideIn 0.6s ease-out;
+}
+
+.drink-offer h2{
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.drink-offer p{
+  color: rgba(255,255,255,0.9);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.drink-offer .question-item{
+  text-align: left;
+}
+
+.button-container{
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.accept-button,
+.reject-button{
+  flex: 1;
+  min-width: 140px;
+  max-width: 200px;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.accept-button{
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  color: white;
+  box-shadow: 0 4px 15px rgba(74,222,128,0.4);
+  order: 1;
+}
+
+.accept-button:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74,222,128,0.6);
+}
+
+.reject-button{
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+  color: white;
+  box-shadow: 0 4px 15px rgba(148,163,184,0.4);
+  order: 2;
+}
+
+.reject-button:hover{
+  background: linear-gradient(135deg, #64748b, #475569);
+}
+
+/* Swap animation */
+.button-container.swapped .accept-button{
+  order: 2;
+}
+
+.button-container.swapped .reject-button{
+  order: 1;
+}
+
+/* ============================================
+   RESPONSIVE MEDIA QUERIES
+   ============================================ */
+
+/* Mobile Extra Small (<= 350px) */
+@media (max-width: 350px){
+  body{
+    font-size: 14px;
+  }
+  
+  .intro{
+    padding: 16px;
+  }
+  
+  .intro-box{
+    padding: 18px 16px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+  
+  .intro-art{
+    width: 70px;
+    height: 70px;
+  }
+  
+  #typewriter{
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  
+  .skip-hint{
+    font-size: 0.7rem;
+  }
+  
+  .cursor{
+    font-size: 1rem;
+    margin-left: 3px;
+  }
+  
+  .profile{
+    padding: 16px;
+  }
+  
+  .profile-card{
+    padding: 20px 16px;
+    gap: 12px;
+    border-radius: 14px;
+  }
+  
+  .name{
+    font-size: 1.3rem;
+    gap: 6px;
+  }
+  
+  .info-item{
+    padding: 10px 12px;
+    margin: 8px 0;
+  }
+  
+  .info-item h3{
+    font-size: 0.85rem;
+  }
+  
+  .info-item p, .info-item span{
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  
+  .section-title{
+    font-size: 1.05rem;
+    gap: 6px;
+    margin: 16px 0 8px 0;
+  }
+  
+  .bio{
+    font-size: 0.85rem;
+    padding: 12px;
+    line-height: 1.6;
+  }
+  
+  .cta-button{
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    margin-top: 16px;
+  }
+  
+  .questions-page{
+    padding: 16px;
+  }
+  
+  .questions-container{
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+  
+  .questions-header h2{
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  
+  .questions-header p{
+    font-size: 0.85rem;
+  }
+  
+  .question-label{
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  
+  .question-input,
+  .question-textarea{
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .question-textarea{
+    min-height: 80px;
+  }
+  
+  .submit-button{
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+  
+  .thank-you h2{
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+  }
+  
+  .thank-you p{
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  .continue-button{
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    margin-top: 18px;
+  }
+  
+  .drink-offer h2{
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+  
+  .drink-offer p{
+    font-size: 0.9rem;
+  }
+  
+  .button-container{
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .accept-button,
+  .reject-button{
+    max-width: 100%;
+    min-width: 100%;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Small (351px - 375px) */
+@media (min-width: 351px) and (max-width: 375px){
+  body{
+    font-size: 14px;
+  }
+  
+  .intro-box{
+    padding: 20px 18px;
+    gap: 12px;
+  }
+  
+  .intro-art{
+    width: 80px;
+    height: 80px;
+  }
+  
+  #typewriter{
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .skip-hint{
+    font-size: 0.75rem;
+  }
+  
+  .profile-card{
+    padding: 22px 18px;
+  }
+  
+  .name{
+    font-size: 1.4rem;
+  }
+  
+  .info-item{
+    padding: 11px 14px;
+  }
+  
+  .info-item h3{
+    font-size: 0.9rem;
+  }
+  
+  .info-item p, .info-item span{
+    font-size: 0.85rem;
+  }
+  
+  .section-title{
+    font-size: 1.1rem;
+  }
+  
+  .bio{
+    font-size: 0.9rem;
+    padding: 13px;
+  }
+  
+  .cta-button{
+    padding: 11px 22px;
+    font-size: 0.9rem;
+  }
+  
+  .questions-container{
+    padding: 22px 18px;
+  }
+  
+  .questions-header h2{
+    font-size: 1.4rem;
+  }
+  
+  .questions-header p{
+    font-size: 0.9rem;
+  }
+  
+  .question-label{
+    font-size: 0.95rem;
+  }
+  
+  .question-input,
+  .question-textarea{
+    padding: 11px 13px;
+    font-size: 0.9rem;
+  }
+  
+  .submit-button{
+    padding: 13px 26px;
+    font-size: 0.95rem;
+  }
+  
+  .thank-you h2{
+    font-size: 1.5rem;
+  }
+  
+  .thank-you p{
+    font-size: 0.95rem;
+  }
+  
+  .continue-button{
+    padding: 11px 26px;
+    font-size: 0.95rem;
+  }
+  
+  .drink-offer h2{
+    font-size: 1.4rem;
+  }
+  
+  .drink-offer p{
+    font-size: 0.95rem;
+  }
+  
+  .button-container{
+    gap: 10px;
+  }
+  
+  .accept-button,
+  .reject-button{
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Medium (376px - 425px) */
+@media (min-width: 376px) and (max-width: 425px){
+  .intro-box{
+    padding: 24px 20px;
+  }
+  
+  .intro-art{
+    width: 85px;
+    height: 85px;
+  }
+  
+  #typewriter{
+    font-size: 0.95rem;
+  }
+  
+  .profile-card{
+    padding: 24px 20px;
+  }
+  
+  .name{
+    font-size: 1.5rem;
+  }
+  
+  .info-item h3{
+    font-size: 0.95rem;
+  }
+  
+  .info-item p, .info-item span{
+    font-size: 0.9rem;
+  }
+  
+  .section-title{
+    font-size: 1.15rem;
+  }
+  
+  .bio{
+    font-size: 0.95rem;
+    padding: 14px;
+  }
+  
+  .questions-container{
+    padding: 24px 20px;
+  }
+  
+  .questions-header h2{
+    font-size: 1.5rem;
+  }
+  
+  .question-label{
+    font-size: 0.98rem;
+  }
+  
+  .question-input,
+  .question-textarea{
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+  
+  .submit-button{
+    padding: 14px 28px;
+    font-size: 1rem;
+  }
+  
+  .thank-you h2{
+    font-size: 1.6rem;
+  }
+  
+  .thank-you p{
+    font-size: 1rem;
+  }
+  
+  .continue-button{
+    padding: 12px 28px;
+    font-size: 1rem;
+  }
+  
+  .drink-offer h2{
+    font-size: 1.5rem;
+  }
+  
+  .accept-button,
+  .reject-button{
+    padding: 13px 22px;
+    font-size: 1rem;
+  }
+}
+
+/* Mobile Large (426px - 600px) */
+@media (min-width: 426px) and (max-width: 600px){
+  .intro-box{
+    padding: 26px 24px;
+  }
+  
+  .intro-art{
+    width: 90px;
+    height: 90px;
+  }
+  
+  #typewriter{
+    font-size: 1rem;
+  }
+  
+  .profile-card{
+    padding: 28px 24px;
+  }
+  
+  .name{
+    font-size: 1.7rem;
+  }
+  
+  .info-item{
+    padding: 13px 16px;
+  }
+  
+  .section-title{
+    font-size: 1.2rem;
+  }
+  
+  .questions-container{
+    padding: 28px 24px;
+  }
+  
+  .questions-header h2{
+    font-size: 1.6rem;
+  }
+  
+  .thank-you h2{
+    font-size: 1.75rem;
+  }
+  
+  .drink-offer h2{
+    font-size: 1.6rem;
+  }
+}
+
+/* Tablet (601px - 900px) */
+@media (min-width: 601px) and (max-width: 900px){
+  .intro-box{
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 18px;
+    padding: 28px 32px;
+  }
+  
+  .intro-art{
+    width: 110px;
+    height: 110px;
+    border-radius: 14px;
+  }
+  
+  #typewriter{
+    font-size: 1.05rem;
+  }
+  
+  .profile-card{
+    padding: 30px 26px;
+  }
+  
+  .name{
+    font-size: 1.9rem;
+  }
+  
+  .section-title{
+    font-size: 1.25rem;
+  }
+  
+  .questions-container{
+    padding: 30px 26px;
+  }
+  
+  .questions-header h2{
+    font-size: 1.7rem;
+  }
+  
+  .thank-you h2{
+    font-size: 1.85rem;
+  }
+  
+  .drink-offer h2{
+    font-size: 1.7rem;
+  }
+  
+  .button-container{
+    gap: 14px;
+  }
+  
+  .accept-button,
+  .reject-button{
+    min-width: 160px;
+  }
+}
+
+/* Desktop (>= 901px) */
+@media (min-width: 901px){
+  .intro-box{
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 20px;
+  }
+  
+  .intro-art{
+    width: 120px;
+    height: 120px;
+    border-radius: 14px;
+    margin-right: 6px;
+  }
+  
+  #typewriter{
+    font-size: 1.1rem;
+  }
+  
+  .button-container{
+    gap: 16px;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce){
+  .intro-art, 
+  .intro-box,
+  .star, 
+  .heart, 
+  .cursor, 
+  .name::before { 
+    animation: none !important; 
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .intro, 
+  .profile, 
+  .profile-card { 
+    transition: none; 
+  }
+  
+  * { 
+    animation-duration: 0.01s !important; 
+  }
+}
+    </style>
+</head>
+<body>
+    <!-- Centered intro / typewriter -->
+    <div class="intro" role="region" aria-label="Lời mở đầu">
+      <div class="intro-box" tabindex="0">
+        <img class="intro-art" src="./asset/img/sha.png" alt="Ảnh Sha" loading="lazy" width="120" height="120">
+        <span id="typewriter" aria-live="polite"></span><span class="cursor" aria-hidden="true">|</span>
+        <span class="skip-hint">(nhấp hoặc nhấn Enter để bỏ qua)</span>
+      </div>
+    </div>
+
+    <!-- Profile (hidden until intro finishes) -->
+    <div class="profile" aria-hidden="true">
+      <div class="profile-card" role="article" tabindex="0">
+        <div class="profile-body">
+          <h2 class="name">Thành</h2>
+          
+          <div class="info-item">
+            <h3>🎂 Ngày sinh</h3>
+            <span>23/04/2004 - Kim Ngưu siêu dịu kha nhó hehe</span>
+          </div>
+
+          <div class="info-item">
+            <h3>💪 Điểm mạnh</h3>
+            <span>Ở gần em (có lẽ vậy, anh đang ở Đống Đa nhé)</span>
+          </div>
+
+          <div class="info-item">
+            <h3>🎵 Sở thích</h3>
+            <span>Nghe nhạc - có lẽ vậy nhưng thật ra anh không thực sự thích làm cụ thể cái gì lắm, mà chỉ cần vui vẻ là anh sẽ làm hehe</span>
+          </div>
+
+          <div class="info-item">
+            <h3>👨‍🍳 Kỹ năng đặc biệt</h3>
+            <span>Anh có biết nấu ăn nhé hehe 😋</span>
+          </div>
+
+          <h2 class="section-title">💌 Lời tâm sự</h2>
+          <p class="bio">
+          Này cô gái, tôi có thể đã rất thích em rồi đấy. Để chúng mình đến gần với nhau hơn liệu a có thể biết 1 chút về em không? Anh rất mong được nghe những câu chuyện của em, dù là nhỏ nhặt nhất. Hy vọng chúng ta sẽ có những khoảnh khắc thật đẹp bên nhau. Vậy nên giúp anh điền đáp án cho vài thắc mắc của anh nhé !!
+          </p>
+          <img src="./asset/img/rainbowCat.gif" alt="">
+          <button class="cta-button" onclick="showQuestions()">💝 Nhấn nếu em thích</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Page -->
+    <div class="questions-page" aria-hidden="true">
+      <div class="questions-container">
+        <div id="questionsForm">
+          <div class="questions-header">
+            <h2>✨ Hãy cho anh biết thêm về em nhé ✨</h2>
+            <p>Những câu hỏi này sẽ giúp anh hiểu em hơn. Em cứ thoải mái chia sẻ nhé! 💕</p>
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              🌸 Tên của em là gì? (hoặc em muốn anh gọi em là gì?)
+            </label>
+            <input type="text" class="question-input" id="q1" placeholder="Ví dụ: Sha, hoặc biệt danh em thích...">
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              🎂 Ngày sinh của em là khi nào nhỉ?
+            </label>
+            <input type="text" class="question-input" id="q2" placeholder="Ví dụ: 15/03/2003">
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              🎵 Nếu như anh ngỏ lời mời em đi chơi thì xác suất thành công là bao nhiêu🥲?
+            </label>
+            <input type="text" class="question-input" id="q3" placeholder="Chia sẻ thể loại nhạc hoặc nghệ sĩ em thích...">
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              🍜 Món ăn yêu thích của em là gì?
+            </label>
+            <input type="text" class="question-input" id="q4" placeholder="Món ăn khiến em hạnh phúc nhất...">
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              🎨 Sở thích của em là gì? Em thích làm gì lúc rảnh?
+            </label>
+            <textarea class="question-textarea" id="q5" placeholder="Xem phim, đọc sách, chơi game, đi du lịch... hoặc bất cứ điều gì em thích!"></textarea>
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              🌟 Nếu có một buổi hẹn hoàn hảo, em muốn nó như thế nào?
+            </label>
+            <textarea class="question-textarea" id="q6" placeholder="Cafe yên tĩnh, dạo phố, xem phim, ăn tối sang trọng... em hãy tưởng tượng nhé!"></textarea>
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              💭 Có điều gì em muốn nói với anh không?
+            </label>
+            <textarea class="question-textarea" id="q7" placeholder="Bất cứ điều gì em muốn chia sẻ... 💕"></textarea>
+          </div>
+
+          <button class="submit-button" onclick="submitAnswers()">💌 Gửi câu trả lời cho anh</button>
+        </div>
+
+        <div id="thankYouMessage" style="display:none;" class="thank-you">
+          <h2>💖 Cảm ơn em rất nhiều! 💖</h2>
+          <p>Anh đã nhận được câu trả lời của em rồi! 🌟</p>
+          <p>Anh rất vui vì em đã dành thời gian chia sẻ về mình 💕</p>
+  
+          <button class="continue-button" onclick="showDrinkOffer()">💝 Tiếp tục</button>
+        </div>
+
+        <div id="drinkOfferMessage" style="display:none;" class="drink-offer">
+          <h2>🧋 Vì em quá nhiệt tình với anh rồi!</h2>
+          <p style="margin-bottom: 24px;">Anh rất muốn gửi tặng em 1 ly trà sữa nhé nhé nhé!!! 🎁✨</p>
+          
+          <div class="question-item">
+            <label class="question-label">
+              📍 Địa chỉ nhận hàng của em:
+            </label>
+            <input type="text" class="question-input" id="address" placeholder="Ví dụ: 123 Đường ABC, Quận XYZ, Hà Nội">
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              📱 Số điện thoại liên hệ:
+            </label>
+            <input type="tel" class="question-input" id="phone" placeholder="Ví dụ: 0123456789">
+          </div>
+
+          <div class="question-item">
+            <label class="question-label">
+              🧋 Em muốn uống gì?
+            </label>
+            <input type="text" class="question-input" id="drink" placeholder="Ví dụ: Trà sữa trân châu, cà phê sữa...">
+          </div>
+
+          <div class="button-container">
+            <button class="accept-button" onclick="submitDrinkOrder()">🎉 Gửi cho anh</button>
+            <button class="reject-button" onmouseenter="swapButtons()" ontouchstart="swapButtons()">😢 Từ chối</button>
+          </div>
+
+          <p style="margin-top: 16px; font-size: 0.9rem; color: rgba(255,255,255,0.6); text-align: center;">
+            (Psst... thử di chuột vào nút "Từ chối" xem sao 😏)
+          </p>
+        </div>
+
+        <div id="finalThankYou" style="display:none;" class="thank-you">
+          <h2>🎊 Yayyy! Cảm ơn em nhiều lắm! 🎊</h2>
+          <p>Anh đã nhận được thông tin rồi nhé! 🧋✨</p>
+          <p>Anh sẽ gửi quà cho em sớm nhất có thể!</p>
+          <p style="margin-top: 20px; font-size: 1.2rem;">
+            Em hãy chờ tin nhắn hoặc cuộc gọi từ anh nha! 💕📞
+          </p>
+          <p style="margin-top: 32px; font-size: 0.95rem; color: rgba(255,255,255,0.7);">
+            Anh rất mong được gặp em sớm! 🌟
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+(function(){
+  const STAR_COUNT = 80;
+  const container = document.body;
+
+  function rand(min, max){
+    return Math.random() * (max - min) + min;
+  }
+
+  function makeStar(){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = rand(2, 8);
+    s.style.width = `${size}px`;
+    s.style.height = `${size}px`;
+    s.style.left = `${rand(0, 100)}vw`;
+    s.style.top  = `${rand(0, 100)}vh`;
+    const twinkleDuration = rand(1.2, 4.0);
+    const twinkleDelay = rand(-4, 0);
+    s.style.animationDuration = `${twinkleDuration}s, ${rand(4,8)}s`;
+    s.style.animationDelay = `${twinkleDelay}s, ${twinkleDelay/2}s`;
+    const hueShift = Math.round(rand(-8,8));
+    s.style.filter = `hue-rotate(${hueShift}deg)`;
+    s.style.opacity = rand(0.15, 0.95).toFixed(2);
+    return s;
+  }
+
+  for(let i=0;i<STAR_COUNT;i++){
+    container.appendChild(makeStar());
+  }
+
+  let resizeTimeout;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(()=>{
+      const stars = document.querySelectorAll('.star');
+      stars.forEach(st=>{
+        if (Math.random() < 0.25) {
+          st.style.left = `${rand(0,100)}vw`;
+          st.style.top  = `${rand(0,100)}vh`;
+        }
+      });
+    }, 120);
+  });
+})();
+
+// Floating hearts effect
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = ['❤️', '💖', '💕', '💗', '💓'][Math.floor(Math.random() * 5)];
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.top = '100vh';
+  document.body.appendChild(heart);
+  
+  setTimeout(() => heart.remove(), 6000);
+}
+
+function createHeartBurst() {
+  for(let i = 0; i < 15; i++) {
+    setTimeout(() => createHeart(), i * 100);
+  }
+}
+
+// Auto create hearts occasionally
+setInterval(() => {
+  if (Math.random() < 0.3) createHeart();
+}, 3000);
+
+// Typewriter effect
+document.addEventListener('DOMContentLoaded', ()=> {
+  const el = document.getElementById('typewriter');
+  const box = document.querySelector('.intro-box');
+  const cursor = document.querySelector('.cursor');
+  const intro = document.querySelector('.intro');
+  const profile = document.querySelector('.profile');
+  const profileCard = document.querySelector('.profile-card');
+
+  if (!el || !box) return;
+
+  const text = `Chào Sha, anh là Thành — rất vui được làm quen với em. Mình muốn bắt đầu bằng những lời thật lòng: em thật dễ thương, ấm áp, và anh hy vọng ta sẽ có nhiều điều để cùng chia sẻ. Nếu em muốn, anh sẽ kể cho em nghe về những chuyến đi, những bản nhạc làm anh rung động, và cả những món ăn anh thích. Hy vọng lời mở đầu này sẽ giúp chúng ta bước vào cuộc trò chuyện nhẹ nhàng và chân thành hơn... 💫`;
+
+  let index = 0;
+  let timerId = null;
+  let skipped = false;
+
+  el.textContent = '';
+
+  function showProfile(){
+    if (intro) intro.classList.add('done');
+    if (profile) {
+      profile.classList.add('show');
+      profile.setAttribute('aria-hidden', 'false');
+      if (profileCard) profileCard.focus();
+    }
+    // Create celebration hearts
+    createHeartBurst();
+  }
+
+  function step(){
+    if (skipped) return;
+    if (index >= text.length) {
+      showProfile();
+      return;
+    }
+    const ch = text.charAt(index++);
+    el.textContent += ch;
+
+    let delay = 30 + Math.random() * 70;
+    if (ch === ' ') delay = 15 + Math.random() * 40;
+    if (ch === ',' ) delay += 180;
+    if (ch === '.' || ch === '!' || ch === '?') delay += 320;
+    if (ch === '\n') delay += 200;
+
+    timerId = setTimeout(step, delay);
+  }
+
+  timerId = setTimeout(step, 600);
+
+  function skipHandler(e){
+    if (skipped) return;
+    if (e.type === 'click' || (e.key && (e.key === 'Enter' || e.key === ' '))) {
+      skipped = true;
+      if (timerId) clearTimeout(timerId);
+      el.textContent = text;
+      if (cursor) cursor.style.opacity = '1';
+      showProfile();
+    }
+  }
+
+  box.addEventListener('click', skipHandler);
+  box.addEventListener('keydown', skipHandler);
+});
+
+// Show questions page
+function showQuestions() {
+  createHeartBurst();
+  const profile = document.querySelector('.profile');
+  const questionsPage = document.querySelector('.questions-page');
+  
+  if (profile) {
+    profile.classList.remove('show');
+    profile.setAttribute('aria-hidden', 'true');
+  }
+  
+  if (questionsPage) {
+    setTimeout(() => {
+      questionsPage.classList.add('show');
+      questionsPage.setAttribute('aria-hidden', 'false');
+      // Focus vào input đầu tiên
+      const firstInput = document.getElementById('q1');
+      if (firstInput) firstInput.focus();
+    }, 500);
+  }
+}
+
+// Submit answers
+async function submitAnswers() {
+  const answers = {
+    name: document.getElementById('q1')?.value || '',
+    birthday: document.getElementById('q2')?.value || '',
+    probability: document.getElementById('q3')?.value || '',
+    food: document.getElementById('q4')?.value || '',
+    hobbies: document.getElementById('q5')?.value || '',
+    perfectDate: document.getElementById('q6')?.value || '',
+    message: document.getElementById('q7')?.value || ''
+  };
+  
+  // Kiểm tra ít nhất 1 câu trả lời
+  const hasAnswer = Object.values(answers).some(val => val.trim() !== '');
+  
+  if (!hasAnswer) {
+    alert('Em hãy trả lời ít nhất một câu hỏi nhé! 💕');
+    return;
+  }
+  
+  // Gửi đến Formspree
+  try {
+    const response = await fetch('https://formspree.io/f/meorwvzw', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        formType: 'Questions Form',
+        ...answers,
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit');
+    }
+
+    console.log('Câu trả lời đã được gửi thành công!');
+  } catch (error) {
+    console.error('Lỗi khi gửi form:', error);
+    // Vẫn tiếp tục hiển thị thank you message ngay cả khi có lỗi
+  }
+  
+  // Lưu vào localStorage (backup)
+  try {
+    const timestamp = new Date().toISOString();
+    const submission = { ...answers, timestamp };
+    const saved = window.localStorage.getItem('submissions') || '[]';
+    const submissions = JSON.parse(saved);
+    submissions.push(submission);
+    window.localStorage.setItem('submissions', JSON.stringify(submissions));
+  } catch(e) {
+    console.log('Không thể lưu vào localStorage');
+  }
+  
+  // Hiển thị thank you message
+  const form = document.getElementById('questionsForm');
+  const thankYou = document.getElementById('thankYouMessage');
+  
+  if (form) form.style.display = 'none';
+  if (thankYou) thankYou.style.display = 'block';
+  
+  // Create celebration
+  createHeartBurst();
+  setTimeout(() => createHeartBurst(), 500);
+  setTimeout(() => createHeartBurst(), 1000);
+}
+
+
+// Show drink offer
+function showDrinkOffer() {
+  const thankYou = document.getElementById('thankYouMessage');
+  const drinkOffer = document.getElementById('drinkOfferMessage');
+  
+  if (thankYou) thankYou.style.display = 'none';
+  if (drinkOffer) {
+    drinkOffer.style.display = 'block';
+    createHeartBurst();
+  }
+}
+
+// Swap buttons when hovering reject
+let swapCount = 0;
+function swapButtons() {
+  const container = document.querySelector('.button-container');
+  if (container) {
+    swapCount++;
+    container.classList.toggle('swapped');
+    
+    // Tạo hiệu ứng vui nhộn
+    if (swapCount === 1) {
+      console.log('Hehe, nút đổi chỗ rồi! 😏');
+    } else if (swapCount === 3) {
+      console.log('Em cứ thử mãi đi, nó sẽ đổi chỗ thôi! 😂');
+    } else if (swapCount === 5) {
+      console.log('Anh biết em thích anh mà, đừng từ chối nữa! 💕');
+    }
+  }
+}
+
+// Submit drink order
+async function submitDrinkOrder() {
+  const address = document.getElementById('address')?.value || '';
+  const phone = document.getElementById('phone')?.value || '';
+  const drink = document.getElementById('drink')?.value || '';
+  
+  if (!address.trim()) {
+    alert('Em ơi, nhập địa chỉ cho anh nhé! 📍');
+    return;
+  }
+  
+  if (!phone.trim()) {
+    alert('Em ơi, cho anh số điện thoại để liên lạc nhé! 📱');
+    return;
+  }
+  
+  if (!drink.trim()) {
+    alert('Em chưa nhập đồ uống mà! 🧋');
+    return;
+  }
+  
+  const orderData = {
+    address: address,
+    phone: phone,
+    drink: drink,
+    timestamp: new Date().toISOString()
+  };
+  
+  // Gửi đến Formspree
+  try {
+    const response = await fetch('https://formspree.io/f/meorwvzw', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        formType: 'Drink Order',
+        ...orderData
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit');
+    }
+
+    console.log('Đơn hàng đã được gửi thành công!');
+  } catch (error) {
+    console.error('Lỗi khi gửi đơn hàng:', error);
+    // Vẫn tiếp tục hiển thị thank you message ngay cả khi có lỗi
+  }
+  
+  // Lưu vào localStorage (backup)
+  try {
+    const saved = window.localStorage.getItem('drinkOrders') || '[]';
+    const orders = JSON.parse(saved);
+    orders.push(orderData);
+    window.localStorage.setItem('drinkOrders', JSON.stringify(orders));
+  } catch(e) {
+    console.log('Không thể lưu vào localStorage');
+  }
+  
+  // Show final thank you
+  const drinkOffer = document.getElementById('drinkOfferMessage');
+  const finalThankYou = document.getElementById('finalThankYou');
+  
+  if (drinkOffer) drinkOffer.style.display = 'none';
+  if (finalThankYou) finalThankYou.style.display = 'block';
+  
+  // Mega celebration!
+  createHeartBurst();
+  setTimeout(() => createHeartBurst(), 300);
+  setTimeout(() => createHeartBurst(), 600);
+  setTimeout(() => createHeartBurst(), 900);
+}
+    </script>
+</body>
+</html>
