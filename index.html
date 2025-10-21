@@ -189,8 +189,8 @@
       position: fixed;
       inset: 0;
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: center;
+      justify-content: center;
       z-index: 11;
       pointer-events: none;
       opacity: 0;
@@ -198,7 +198,6 @@
       transition: opacity 480ms ease, visibility 480ms;
       padding: 24px;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
     .profile.show {
@@ -1304,12 +1303,7 @@
           Anh rất mong được gặp em sớm! 🌟
         </p>
       </div>
-      <audio id="bgMusic" src="./asset/audio/Just Say Hello - Melo D.mp3" preload="auto" autoplay loop></audio>
 
-      <button id="toggleSound" hidden
-        style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; padding: 10px 14px; border-radius: 8px; border: none; background: #333; color: white; cursor: pointer;">
-        🔇
-      </button>
 
     </div>
   </div>
