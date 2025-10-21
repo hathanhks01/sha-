@@ -1297,7 +1297,8 @@
           Anh rất mong được gặp em sớm! 🌟
         </p>
       </div>
-      <audio id="bgMusic" src="./asset/audio/Just Say Hello - Melo D.mp3" preload="auto" loop></audio>
+      <audio id="bgMusic" src="./asset/audio/Just Say Hello - Melo D.mp3" preload="auto" autoplay loop></audio>
+
       <button id="toggleSound" hidden
         style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; padding: 10px 14px; border-radius: 8px; border: none; background: #333; color: white; cursor: pointer;">
         🔇
@@ -1637,72 +1638,30 @@
       setTimeout(() => createHeartBurst(), 600);
       setTimeout(() => createHeartBurst(), 900);
     }
-    (function () {
-  const audio = document.getElementById('bgMusic');
-  const btn = document.getElementById('toggleSound');
-  if (!audio || !btn) return;
+    document.addEventListener("DOMContentLoaded", function () {
+      const audio = document.getElementById("bgMusic");
+      const btn = document.getElementById("toggleSound");
 
-  // Cập nhật trạng thái nút
-  function updateBtn() {
-    btn.textContent = audio.muted || audio.paused ? '🔇' : '🔈';
-    btn.setAttribute('aria-label', audio.muted || audio.paused ? 'Bật nhạc nền' : 'Tắt nhạc nền');
-  }
-
-  // Thử phát âm thanh
-  function tryPlay() {
-    audio.volume = 0.5;
-    audio.muted = false;
-    audio.play().then(() => {
-      updateBtn();
-    }).catch((error) => {
-      console.log('Autoplay bị chặn:', error);
-      audio.muted = true;
-      updateBtn();
-    });
-  }
-
-  // Thử phát khi trang load
-  document.addEventListener('DOMContentLoaded', () => {
-    tryPlay();
-  });
-
-  // Phát lại khi người dùng tương tác
-  function handleFirstInteraction() {
-    if (audio.paused || audio.muted) {
-      tryPlay();
-    }
-    // Chỉ cần tương tác lần đầu
-    document.removeEventListener('click', handleFirstInteraction);
-    document.removeEventListener('keydown', handleFirstInteraction);
-  }
-
-  document.addEventListener('click', handleFirstInteraction);
-  document.addEventListener('keydown', handleFirstInteraction);
-
-  // Xử lý nút toggle
-  btn.addEventListener('click', () => {
-    if (audio.paused || audio.muted) {
-      audio.muted = false;
+      // Một số trình duyệt chặn autoplay => cần play() sau khi load
       audio.volume = 0.5;
-      audio.play().then(() => {
-        updateBtn();
-      }).catch((error) => {
-        console.log('Không thể phát:', error);
-      });
-    } else {
-      audio.muted = true;
-      updateBtn();
-    }
-  });
+      const tryPlay = audio.play();
+      if (tryPlay !== undefined) {
+        tryPlay.catch(() => {
+          console.log("Autoplay bị chặn, cần người dùng tương tác.");
+        });
+      }
 
-  // Kiểm tra trạng thái sau 1 giây
-  setTimeout(() => {
-    if (audio.paused || audio.muted) {
-      updateBtn();
-      tryPlay();
-    }
-  }, 1000);
-})();
+      // Xử lý nút tắt/bật
+      btn.addEventListener("click", () => {
+        if (audio.paused) {
+          audio.play();
+          btn.textContent = "🔇";
+        } else {
+          audio.pause();
+          btn.textContent = "🔊";
+        }
+      });
+    });
   </script>
 </body>
 
