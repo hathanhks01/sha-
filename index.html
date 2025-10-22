@@ -29,8 +29,7 @@
       min-height: 100vh;
       background: radial-gradient(1200px 600px at 10% 20%, rgba(255, 255, 255, 0.12), transparent 10%),
         linear-gradient(135deg, var(--pink1) 0%, var(--pink2) 50%, var(--bg-dark) 100%);
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow: hidden;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       position: relative;
     }
@@ -184,8 +183,8 @@
       transform: translateY(-4px) scale(1.02);
     }
 
-    /* Profile card */
-        .profile {
+    /* Profile card - Fixed scroll */
+    .profile {
       position: fixed;
       inset: 0;
       display: flex;
@@ -206,7 +205,7 @@
       pointer-events: auto;
     }
 
- .profile-card {
+    .profile-card {
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -227,6 +226,14 @@
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
       position: relative;
+      /* Ẩn scrollbar nhưng vẫn giữ chức năng scroll */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    /* Ẩn scrollbar cho Chrome, Safari và Opera */
+    .profile-card::-webkit-scrollbar {
+      display: none;
     }
 
     @keyframes slideIn {
@@ -244,6 +251,7 @@
     .profile-body {
       width: 100%;
       min-width: 0;
+      position: relative;
     }
 
     .profile-card img {
@@ -379,7 +387,6 @@
       position: fixed;
       inset: 0;
       display: flex;
-      /* change to start so content can scroll on mobile */
       align-items: flex-start;
       justify-content: center;
       z-index: 13;
@@ -388,8 +395,7 @@
       visibility: hidden;
       transition: opacity 480ms ease, visibility 480ms;
       padding: 24px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
     }
 
     .questions-page.show {
@@ -408,10 +414,19 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       animation: slideIn 0.6s ease-out;
       margin: 12px auto;
-      /* allow container itself to scroll when viewport is small */
       max-height: calc(100vh - 48px);
       overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      position: relative;
+      /* Ẩn scrollbar nhưng vẫn giữ chức năng scroll */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .questions-container::-webkit-scrollbar {
+      display: none;
     }
 
     .questions-header {
@@ -621,46 +636,37 @@
     /* Mobile touch optimization */
     @media (max-width: 768px) {
       body {
-        /* Ngăn scroll background trên mobile */
-        overscroll-behavior: contain;
+        overscroll-behavior: none;
         -webkit-overflow-scrolling: touch;
       }
 
       .profile {
-        /* Đảm bảo profile container có thể scroll đúng cách */
         align-items: flex-start;
         padding: 12px;
-        /* Ngăn scroll background */
-        overscroll-behavior: contain;
       }
 
       .profile-card {
-        /* Tối ưu cho mobile - giảm padding và margin */
         margin: 0 auto;
+        padding: 24px 20px;
         max-height: calc(100vh - 24px);
-        /* Đảm bảo scroll mượt mà */
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
-        /* Ngăn zoom khi double tap */
         touch-action: pan-y;
       }
 
-      /* Tối ưu cho các element bên trong profile card */
       .profile-body {
-        /* Đảm bảo nội dung có thể scroll */
         overflow-y: visible;
         -webkit-overflow-scrolling: touch;
       }
 
-      /* Tối ưu cho questions page */
       .questions-page {
         align-items: flex-start;
         padding: 12px;
-        overscroll-behavior: contain;
       }
 
       .questions-container {
         margin: 0 auto;
+        padding: 24px 20px;
         max-height: calc(100vh - 24px);
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
@@ -705,19 +711,13 @@
 
       .profile {
         padding: 8px;
-        align-items: flex-start;
       }
 
       .profile-card {
         padding: 16px 12px;
         gap: 10px;
         border-radius: 12px;
-        margin: 0 auto;
         max-height: calc(100vh - 16px);
-        /* Tối ưu scroll cho màn hình rất nhỏ */
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .name {
@@ -760,17 +760,12 @@
 
       .questions-page {
         padding: 8px;
-        align-items: flex-start;
       }
 
       .questions-container {
         padding: 16px 12px;
         border-radius: 12px;
-        margin: 0 auto;
         max-height: calc(100vh - 16px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -868,11 +863,7 @@
 
       .profile-card {
         padding: 20px 16px;
-        margin: 0 auto;
         max-height: calc(100vh - 20px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .name {
@@ -908,11 +899,7 @@
 
       .questions-container {
         padding: 20px 16px;
-        margin: 0 auto;
         max-height: calc(100vh - 20px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -987,11 +974,7 @@
 
       .profile-card {
         padding: 22px 18px;
-        margin: 0 auto;
         max-height: calc(100vh - 24px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .name {
@@ -1018,11 +1001,7 @@
 
       .questions-container {
         padding: 22px 18px;
-        margin: 0 auto;
         max-height: calc(100vh - 24px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -1085,11 +1064,7 @@
 
       .profile-card {
         padding: 26px 22px;
-        margin: 0 auto;
         max-height: calc(100vh - 28px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .name {
@@ -1106,11 +1081,7 @@
 
       .questions-container {
         padding: 26px 22px;
-        margin: 0 auto;
         max-height: calc(100vh - 28px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
 
       .questions-header h2 {
@@ -1216,11 +1187,15 @@
         touch-action: manipulation;
       }
 
+      /* Cho phép scroll trên card */
+      .profile-card,
+      .questions-container {
+        touch-action: pan-y !important;
+      }
+
       /* Tối ưu cho profile card trên mobile */
       .profile-card {
-        /* Đảm bảo scroll mượt mà */
         scroll-behavior: smooth;
-        /* Ngăn bounce effect trên iOS */
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
       }
@@ -1235,9 +1210,7 @@
       /* Tối ưu cho các input trên mobile */
       .question-input,
       .question-textarea {
-        /* Ngăn zoom khi focus trên iOS */
         font-size: 16px;
-        /* Đảm bảo input không bị che bởi keyboard */
         transform: translateZ(0);
       }
 
@@ -1247,10 +1220,8 @@
       .continue-button,
       .accept-button,
       .reject-button {
-        /* Tăng kích thước touch target */
         min-height: 44px;
         min-width: 44px;
-        /* Ngăn highlight khi touch */
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -1282,7 +1253,6 @@
         animation-duration: 0.01s !important;
       }
     }
-    
   </style>
 </head>
 
@@ -1557,7 +1527,6 @@
           profile.setAttribute('aria-hidden', 'false');
           if (profileCard) profileCard.focus();
         }
-        // Create celebration hearts
         createHeartBurst();
       }
 
@@ -1611,14 +1580,11 @@
         setTimeout(() => {
           questionsPage.classList.add('show');
           questionsPage.setAttribute('aria-hidden', 'false');
-          // Focus vào input đầu tiên với delay để tránh lỗi trên mobile
           const firstInput = document.getElementById('q1');
           if (firstInput) {
-            // Delay focus để tránh lỗi trên mobile
             setTimeout(() => {
               try {
                 firstInput.focus();
-                // Scroll input vào view trên mobile
                 firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
               } catch (e) {
                 console.log('Focus failed on mobile');
@@ -1641,7 +1607,6 @@
         message: document.getElementById('q7')?.value || ''
       };
 
-      // Kiểm tra ít nhất 1 câu trả lời
       const hasAnswer = Object.values(answers).some(val => val.trim() !== '');
 
       if (!hasAnswer) {
@@ -1649,7 +1614,6 @@
         return;
       }
 
-      // Gửi đến Formspree
       try {
         const response = await fetch('https://formspree.io/f/meorwvzw', {
           method: 'POST',
@@ -1670,10 +1634,8 @@
         console.log('Câu trả lời đã được gửi thành công!');
       } catch (error) {
         console.error('Lỗi khi gửi form:', error);
-        // Vẫn tiếp tục hiển thị thank you message ngay cả khi có lỗi
       }
 
-      // Lưu vào localStorage (backup)
       try {
         const timestamp = new Date().toISOString();
         const submission = { ...answers, timestamp };
@@ -1685,19 +1647,16 @@
         console.log('Không thể lưu vào localStorage');
       }
 
-      // Hiển thị thank you message
       const form = document.getElementById('questionsForm');
       const thankYou = document.getElementById('thankYouMessage');
 
       if (form) form.style.display = 'none';
       if (thankYou) thankYou.style.display = 'block';
 
-      // Create celebration
       createHeartBurst();
       setTimeout(() => createHeartBurst(), 500);
       setTimeout(() => createHeartBurst(), 1000);
     }
-
 
     // Show drink offer
     function showDrinkOffer() {
@@ -1719,7 +1678,6 @@
         swapCount++;
         container.classList.toggle('swapped');
 
-        // Tạo hiệu ứng vui nhộn
         if (swapCount === 1) {
           console.log('Hehe, nút đổi chỗ rồi! 😏');
         } else if (swapCount === 3) {
@@ -1758,7 +1716,6 @@
         timestamp: new Date().toISOString()
       };
 
-      // Gửi đến Formspree
       try {
         const response = await fetch('https://formspree.io/f/meorwvzw', {
           method: 'POST',
@@ -1778,10 +1735,8 @@
         console.log('Đơn hàng đã được gửi thành công!');
       } catch (error) {
         console.error('Lỗi khi gửi đơn hàng:', error);
-        // Vẫn tiếp tục hiển thị thank you message ngay cả khi có lỗi
       }
 
-      // Lưu vào localStorage (backup)
       try {
         const saved = window.localStorage.getItem('drinkOrders') || '[]';
         const orders = JSON.parse(saved);
@@ -1791,63 +1746,22 @@
         console.log('Không thể lưu vào localStorage');
       }
 
-      // Show final thank you
       const drinkOffer = document.getElementById('drinkOfferMessage');
       const finalThankYou = document.getElementById('finalThankYou');
 
       if (drinkOffer) drinkOffer.style.display = 'none';
       if (finalThankYou) finalThankYou.style.display = 'block';
 
-      // Mega celebration!
       createHeartBurst();
       setTimeout(() => createHeartBurst(), 300);
       setTimeout(() => createHeartBurst(), 600);
       setTimeout(() => createHeartBurst(), 900);
-    }
-    // Mobile touch optimization
-    function optimizeMobileTouch() {
-      // Ngăn scroll background khi touch trên profile card
-      const profileCard = document.querySelector('.profile-card');
-      const questionsContainer = document.querySelector('.questions-container');
-      
-      if (profileCard) {
-        profileCard.addEventListener('touchstart', function(e) {
-          // Ngăn scroll background
-          e.stopPropagation();
-        }, { passive: false });
-        
-        profileCard.addEventListener('touchmove', function(e) {
-          // Chỉ cho phép scroll trong container
-          if (this.scrollTop === 0 && e.touches[0].clientY > e.touches[0].pageY) {
-            e.preventDefault();
-          }
-          if (this.scrollTop + this.offsetHeight >= this.scrollHeight && e.touches[0].clientY < e.touches[0].pageY) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-      }
-      
-      if (questionsContainer) {
-        questionsContainer.addEventListener('touchstart', function(e) {
-          e.stopPropagation();
-        }, { passive: false });
-        
-        questionsContainer.addEventListener('touchmove', function(e) {
-          if (this.scrollTop === 0 && e.touches[0].clientY > e.touches[0].pageY) {
-            e.preventDefault();
-          }
-          if (this.scrollTop + this.offsetHeight >= this.scrollHeight && e.touches[0].clientY < e.touches[0].pageY) {
-            e.preventDefault();
-          }
-        }, { passive: false });
-      }
     }
 
     document.addEventListener("DOMContentLoaded", function () {
       const audio = document.getElementById("bgMusic");
       const btn = document.getElementById("toggleSound");
 
-      // Một số trình duyệt chặn autoplay => cần play() sau khi load
       audio.volume = 0.5;
       const tryPlay = audio.play();
       if (tryPlay !== undefined) {
@@ -1856,7 +1770,6 @@
         });
       }
 
-      // Xử lý nút tắt/bật
       btn.addEventListener("click", () => {
         if (audio.paused) {
           audio.play();
@@ -1866,9 +1779,6 @@
           btn.textContent = "🔊";
         }
       });
-
-      // Tối ưu mobile touch
-      optimizeMobileTouch();
     });
   </script>
 </body>
