@@ -1766,6 +1766,53 @@
         }
       });
     });
+    document.addEventListener("DOMContentLoaded", function () {
+      const audio = document.getElementById("bgMusic");
+      const btn = document.getElementById("toggleSound");
+      let musicStarted = false;
+
+      audio.volume = 0.3;
+
+      // Hàm phát nhạc
+      function startMusic() {
+        if (musicStarted) return;
+        audio.play().then(() => {
+          musicStarted = true;
+          btn.textContent = "🔇";
+          console.log("Nhạc đã phát!");
+        }).catch(e => {
+          console.log("Chưa thể phát nhạc");
+        });
+      }
+
+      // Thử autoplay ngay
+      startMusic();
+
+      // Bắt mọi tương tác đầu tiên để phát nhạc
+      const interactions = ['click', 'touchstart', 'keydown', 'scroll'];
+      const playOnce = () => {
+        startMusic();
+        interactions.forEach(event => {
+          document.removeEventListener(event, playOnce);
+        });
+      };
+      
+      interactions.forEach(event => {
+        document.addEventListener(event, playOnce, { once: true });
+      });
+
+      // Toggle button
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (audio.paused) {
+          audio.play();
+          btn.textContent = "🔇";
+        } else {
+          audio.pause();
+          btn.textContent = "🔊";
+        }
+      });
+    });
   </script>
 </body>
 
