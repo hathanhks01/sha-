@@ -191,18 +191,27 @@
       align-items: flex-start;
       justify-content: center;
       z-index: 11;
-      pointer-events: none;
+      pointer-events: auto;
       opacity: 0;
       visibility: hidden;
       transition: opacity 480ms ease, visibility 480ms;
       padding: 24px;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      /* Ẩn scrollbar */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .profile::-webkit-scrollbar {
+      display: none;
     }
 
     .profile.show {
       opacity: 1;
       visibility: visible;
-      pointer-events: auto;
     }
 
     .profile-card {
@@ -220,20 +229,7 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       animation: slideIn 0.6s ease-out;
       margin: 12px auto;
-      max-height: calc(100vh - 48px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
       position: relative;
-      /* Ẩn scrollbar nhưng vẫn giữ chức năng scroll */
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE and Edge */
-    }
-
-    /* Ẩn scrollbar cho Chrome, Safari và Opera */
-    .profile-card::-webkit-scrollbar {
-      display: none;
     }
 
     @keyframes slideIn {
@@ -390,18 +386,27 @@
       align-items: flex-start;
       justify-content: center;
       z-index: 13;
-      pointer-events: none;
+      pointer-events: auto;
       opacity: 0;
       visibility: hidden;
       transition: opacity 480ms ease, visibility 480ms;
       padding: 24px;
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      /* Ẩn scrollbar */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .questions-page::-webkit-scrollbar {
+      display: none;
     }
 
     .questions-page.show {
       opacity: 1;
       visibility: visible;
-      pointer-events: auto;
     }
 
     .questions-container {
@@ -414,19 +419,7 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       animation: slideIn 0.6s ease-out;
       margin: 12px auto;
-      max-height: calc(100vh - 48px);
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
       position: relative;
-      /* Ẩn scrollbar nhưng vẫn giữ chức năng scroll */
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .questions-container::-webkit-scrollbar {
-      display: none;
     }
 
     .questions-header {
@@ -637,40 +630,30 @@
     @media (max-width: 768px) {
       body {
         overscroll-behavior: none;
-        -webkit-overflow-scrolling: touch;
       }
 
       .profile {
         align-items: flex-start;
         padding: 12px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .profile-card {
         margin: 0 auto;
         padding: 24px 20px;
-        max-height: calc(100vh - 24px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
-      }
-
-      .profile-body {
-        overflow-y: visible;
-        -webkit-overflow-scrolling: touch;
       }
 
       .questions-page {
         align-items: flex-start;
         padding: 12px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .questions-container {
         margin: 0 auto;
         padding: 24px 20px;
-        max-height: calc(100vh - 24px);
-        overscroll-behavior: contain;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
       }
     }
 
@@ -717,7 +700,6 @@
         padding: 16px 12px;
         gap: 10px;
         border-radius: 12px;
-        max-height: calc(100vh - 16px);
       }
 
       .name {
@@ -765,7 +747,6 @@
       .questions-container {
         padding: 16px 12px;
         border-radius: 12px;
-        max-height: calc(100vh - 16px);
       }
 
       .questions-header h2 {
@@ -863,7 +844,6 @@
 
       .profile-card {
         padding: 20px 16px;
-        max-height: calc(100vh - 20px);
       }
 
       .name {
@@ -899,7 +879,6 @@
 
       .questions-container {
         padding: 20px 16px;
-        max-height: calc(100vh - 20px);
       }
 
       .questions-header h2 {
@@ -974,7 +953,6 @@
 
       .profile-card {
         padding: 22px 18px;
-        max-height: calc(100vh - 24px);
       }
 
       .name {
@@ -1001,7 +979,6 @@
 
       .questions-container {
         padding: 22px 18px;
-        max-height: calc(100vh - 24px);
       }
 
       .questions-header h2 {
@@ -1064,7 +1041,6 @@
 
       .profile-card {
         padding: 26px 22px;
-        max-height: calc(100vh - 28px);
       }
 
       .name {
@@ -1081,7 +1057,6 @@
 
       .questions-container {
         padding: 26px 22px;
-        max-height: calc(100vh - 28px);
       }
 
       .questions-header h2 {
@@ -1182,28 +1157,16 @@
 
     /* Additional mobile optimizations */
     @media (max-width: 768px) {
-      /* Ngăn zoom khi double tap trên mobile */
-      * {
-        touch-action: manipulation;
-      }
-
-      /* Cho phép scroll trên card */
-      .profile-card,
-      .questions-container {
+      /* Cho phép scroll trên container */
+      .profile,
+      .questions-page {
         touch-action: pan-y !important;
       }
 
-      /* Tối ưu cho profile card trên mobile */
-      .profile-card {
+      /* Tối ưu scroll behavior */
+      .profile,
+      .questions-page {
         scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
-      }
-
-      /* Tối ưu cho questions container */
-      .questions-container {
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
       }
 
@@ -1299,7 +1262,6 @@
           về em không? Anh rất mong được nghe những câu chuyện của em, dù là nhỏ nhặt nhất. Hy vọng chúng ta sẽ có những
           khoảnh khắc thật đẹp bên nhau. Vậy nên giúp anh điền đáp án cho vài thắc mắc của anh nhé !!
         </p>
-        <img src="./asset/img/rainbowCat.gif" alt="">
         <button class="cta-button" onclick="showQuestions()">💝 Nhấn nếu em thích</button>
       </div>
     </div>
